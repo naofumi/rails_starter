@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ruby:3.0.3-alpine
+FROM ruby:3.1.0-alpine
 RUN apk update && apk add alpine-sdk tzdata bash less yarn sqlite sqlite-dev gcompat
 WORKDIR /app
 COPY Gemfile /app/Gemfile
