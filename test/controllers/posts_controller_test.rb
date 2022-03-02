@@ -38,8 +38,8 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to post_url(@post)
   end
 
-  test "should destroy post" do
-    assert_difference("Post.count", -1) do
+  test "fail destroy post" do
+    assert_difference("Post.count", 0) do
       delete post_url(@post)
     end
 

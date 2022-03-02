@@ -38,8 +38,8 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to tag_url(@tag)
   end
 
-  test "should destroy tag" do
-    assert_difference("Tag.count", -1) do
+  test "fail destroy tag" do
+    assert_difference("Tag.count", 0) do
       delete tag_url(@tag)
     end
 
