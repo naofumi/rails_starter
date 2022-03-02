@@ -1,0 +1,27 @@
+<%= form_with(model: tagging) do |form| %>
+  <% if tagging.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tagging.errors.count, "error") %> prohibited this tagging from being saved:</h2>
+
+      <ul>
+        <% tagging.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :post_id, style: "display: block" %>
+    <%= form.text_field :post_id %>
+  </div>
+
+  <div>
+    <%= form.label :tag_id, style: "display: block" %>
+    <%= form.text_field :tag_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
