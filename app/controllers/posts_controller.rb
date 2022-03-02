@@ -1,14 +1,14 @@
 class PostsController < ApplicationController
   # GET /posts/new
   def new
-    @form = PostForm.new
+    @post = Post.new
   end
 
   # POST /posts or /posts.json
   def create
-    @form = PostForm.new(post_params)
+    @post = Post.new(post_params)
 
-    if @form.save
+    if @post.save
       redirect_to posts_path, notice: "Post was successfully created."
     else
       render :new
@@ -18,8 +18,6 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     load_post
-
-    @form = PostForm.new(post: @post)
   end
 
 
@@ -27,9 +25,7 @@ class PostsController < ApplicationController
   def update
     load_post
 
-    @form = PostForm.new(post_params, post: @post)
-
-    if @form.save
+    if @post.update(post_params)
       redirect_to @post, notice: "Post was successfully updated."
     else
       render :edit
