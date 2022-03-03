@@ -7,6 +7,10 @@ class Post < ApplicationRecord
                   .map { |name| Tag.find_or_initialize_by(name: name) }
   end
 
+  def tag_names
+    tags.map(&:name).join(', ')
+  end
+
 
   private
 
