@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Posts</h1>
+<hr>
+<div id="posts">
+  <% @posts.each do |post| %>
+    <%= render post %>
+    <p>
+      <%= link_to "Edit", edit_post_path(post) %>
+    </p>
+    <hr>
+  <% end %>
+</div>
+
+<%= link_to "New post", new_post_path %>

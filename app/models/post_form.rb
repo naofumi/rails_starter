@@ -2,6 +2,7 @@ class PostForm
   include ActiveModel::Model
 
   attr_accessor :title, :content, :tag_names
+  attr_reader :post
 
   validates :title, presence: true
   validates :split_tag_names, presence: true
@@ -30,8 +31,6 @@ class PostForm
   end
 
   private
-
-  attr_reader :post
 
   def default_attributes
     {

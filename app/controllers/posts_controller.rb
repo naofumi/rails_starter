@@ -1,6 +1,16 @@
 class PostsController < ApplicationController
+  # GET /posts or /posts.json
+  def index
+    @posts = Post.all
+  end
+
   # GET /posts/new
   def new
+    @form = PostForm.new
+  end
+
+  # GET /posts/1/edit
+  def edit
     @form = PostForm.new
   end
 
@@ -30,7 +40,7 @@ class PostsController < ApplicationController
     @form = PostForm.new(post_params, post: @post)
 
     if @form.save
-      redirect_to @post, notice: "Post was successfully updated."
+      redirect_to posts_path, notice: "Post was successfully updated."
     else
       render :edit
     end
