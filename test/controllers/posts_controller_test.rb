@@ -10,6 +10,12 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get index" do
+    get posts_url
+    assert_response :success
+    assert_match "TagOne, TagTwo", response.body
+  end
+
   test "should create post" do
     assert_difference("Post.count") do
       post posts_url, params: { post: { content: @post.content,
@@ -25,6 +31,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_post_url(@post)
     assert_response :success
+    assert_match 'TagOne, TagTwo', response.body
   end
 
   test "should update post" do

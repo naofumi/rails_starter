@@ -11,7 +11,8 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    tags = tags(post_params[:tag_names])
+    @post = Post.new(post_params.except(:tag_names).merge(tags: tags))
 
     if @post.save
       redirect_to posts_path, notice: "Post was successfully created."
@@ -29,8 +30,9 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     load_post
+    @post.tags = tags(post_params[:tag_names])
 
-    if @post.update(post_params)
+    if @post.update(post_params.except(:tag_names))
       redirect_to @post, notice: "Post was successfully updated."
     else
       render :edit
@@ -46,5 +48,14 @@ class PostsController < ApplicationController
 
     def load_post
       @post = Post.find(params[:id])
+    end
+
+    def tags(tag_names_string)
+      split_tag_names(tag_names_string)
+                        .map { |name| Tag.find_or_initialize_by(name: name) }
+    end
+
+    def split_tag_names(tag_names_string)
+      tag_names_string.split(/\s*,\s*/)
     end
 end

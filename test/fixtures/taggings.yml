@@ -4,6 +4,10 @@ one:
   post: one
   tag: one
 
+one-two:
+  post: one
+  tag: two
+
 two:
   post: two
   tag: two
