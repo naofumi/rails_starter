@@ -7,40 +7,27 @@ class PostForm
   validates :title, presence: true
   validates :split_tag_names, presence: true
 
-  delegate :persisted?, to: :post
+  delegate :title, :title=, :content, :content=,
+           :persisted?, :to_model, :save,
+           to: :post
 
   def initialize(attributes = nil, post: Post.new)
     @post = post
-    attributes ||= default_attributes
     super(attributes)
   end
 
-  def save
-    return if invalid?
-
-    ActiveRecord::Base.transaction do
-      tags = split_tag_names.map { |name| Tag.find_or_create_by!(name: name) }
-      post.update!(title: title, content: content, tags: tags)
-    end
-  rescue ActiveRecord::RecordInvalid
-    false
+  def tag_names=(tag_names_string)
+    post.tags = split_tag_names(tag_names_string)
+                  .map { |name| Tag.find_or_initialize_by(name: name) }
   end
 
-  def to_model
-    post
+  def tag_names
+    post.tags.pluck(:name).join(',')
   end
 
   private
 
-  def default_attributes
-    {
-      title: post.title,
-      content: post.content,
-      tag_names: post.tags.pluck(:name).join(',')
-    }
-  end
-
-  def split_tag_names
-    tag_names.split(/\s*,\s*/)
+  def split_tag_names(tag_names_string)
+    tag_names_string.split(/\s*,\s*/)
   end
 end
